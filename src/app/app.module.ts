@@ -9,12 +9,19 @@ import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {UserService} from "./user.service";
+import { LoginUserComponent } from './login-user/login-user.component';
+import {UserGuardService} from "./user-guard.service";
+import { EventsComponent } from './events/events.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    LoginUserComponent,
+    EventsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +30,7 @@ import {UserService} from "./user.service";
     HttpModule,
     AppRoutingModule
   ],
-  providers: [UserService],
+  providers: [UserService, UserGuardService, NavbarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
