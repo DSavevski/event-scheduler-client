@@ -14,6 +14,7 @@ export class LoginUserComponent implements OnInit {
 
   user: User;
   messages: string;
+  isAuthenticated = false;
 
   constructor(private userService: UserService,
               private router: Router) {
@@ -21,6 +22,14 @@ export class LoginUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = new User();
+
+    this.userService.getUser()
+      .subscribe(user => {
+        if(user != null)
+          this.isAuthenticated = true;
+        else
+          this.isAuthenticated = false;
+      });
   }
 
   onSubmit(): void {

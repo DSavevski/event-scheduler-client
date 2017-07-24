@@ -11,15 +11,21 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item" *ngIf="isAuthenticated">
+      <li class="nav-item">
         <a class="nav-link" routerLink="/events">Events</a>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticated">
+        <a class="nav-link" routerLink="/my-events">My Events</a>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticated">
+        <a class="nav-link" routerLink="/new-event">Create event</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-
       <div class="btn-group">
+        <!--<img *ngIf="isAuthenticated" src="https://github.com/{{user.username}}.png?size=40" alt="">-->
         <button *ngIf="isAuthenticated" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          {{user.name}}
+          {{user.username}}
         </button>
         <button *ngIf="!isAuthenticated" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
           Login
@@ -37,4 +43,6 @@
     </form>
   </div>
 </nav>
+
+
 

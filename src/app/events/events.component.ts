@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../user.model";
 import {UserService} from "../user.service";
+import {EventService} from "../event.service";
 
 @Component({
   selector: 'app-events',
@@ -9,11 +10,15 @@ import {UserService} from "../user.service";
 })
 export class EventsComponent implements OnInit {
 
-  user:User;
+  allEvents: any;
 
-  constructor(private userService: UserService) { }
+  constructor(private eventService: EventService) { }
 
   ngOnInit() {
+    this.eventService.getAllEvents()
+      .subscribe(events => {
+        this.allEvents = events;
+      });
   }
 
 }

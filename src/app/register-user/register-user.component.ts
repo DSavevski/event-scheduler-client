@@ -45,6 +45,6 @@ export class RegisterUserComponent implements OnInit {
 
   onCreate() {
     this.userService.registerUser(this.user.firstName, this.user.lastName, this.user.username, this.user.password);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']).then(() => window.location.reload());
   }
 }

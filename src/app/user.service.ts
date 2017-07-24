@@ -22,16 +22,25 @@ export class UserService {
     if (this.loggedUser == null) {
       this.loggedUser = this.http.get('/api/user')
         .map(response => {
+          //console.log('Response:', response);
           this.isLoggedIn = true;
-          return response.json();
+            return response.json();
         })
         .catch(error => {
-          console.log('Error from getUser() in user-service', error);
+          //console.log('Error from getUser() in user-service', error);
           this.isLoggedIn = false;
           return Observable.of(null);
         });
     }
     return this.loggedUser;
+  }
+
+  getGithubFullName (username: string): Observable<string>{
+    let url = 'https://api.github.com/users/' +  username;
+    return this.http.get(url)
+      .map(response => {
+        return response.json().name;
+      });
   }
 
   public login(user: User): Observable<string> {
@@ -58,7 +67,10 @@ export class UserService {
         {firstName: firstName, lastName: lastName, username: username, password: password}),
         {headers: this.headersRegister})
       .toPromise()
-      .then(res => res.json())
+      .then(res => {
+        console.log('JSON: ', res.json());
+        //this.login(res.json());
+      })
       .catch(UserService.handleError);
 
   }
