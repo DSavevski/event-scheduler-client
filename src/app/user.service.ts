@@ -4,60 +4,55 @@ import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {User} from "./user.model";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class UserService {
 
-  isLoggedIn: boolean = false;
-  loggedUser: Observable<{}>;
-  // subject: Subject<any> = new Subject();
-  // subjectObservable = this.subject.asObservable();
+  isAuthenticated = Observable.create();
+  user: Observable<{}>;
+
   private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
   private headersRegister = new Headers({'Content-Type': 'application/json'});
 
-  constructor(private http: Http) {
-  }
+  constructor(private http: Http) {}
 
   getUser(): Observable<{}> {
-    if (this.loggedUser == null) {
-      this.loggedUser = this.http.get('/api/user')
+    if (this.user == null) {
+      this.user = this.http.get('/api/user')
         .map(response => {
-          //console.log('Response:', response);
-          this.isLoggedIn = true;
+
+          if(response.text() != '') {
+            this.isAuthenticated = true;
             return response.json();
+          }else{
+            this.isAuthenticated = false;
+          }
         })
         .catch(error => {
-          //console.log('Error from getUser() in user-service', error);
-          this.isLoggedIn = false;
+          this.isAuthenticated = false;
           return Observable.of(null);
         });
     }
-    return this.loggedUser;
+    return this.user;
   }
 
-  getGithubFullName (username: string): Observable<string>{
-    let url = 'https://api.github.com/users/' +  username;
-    return this.http.get(url)
-      .map(response => {
-        return response.json().name;
-      });
-  }
 
-  public login(user: User): Observable<string> {
-    console.log('This user will be sent to backend: ', user);
+  public login(user: User): Observable<{}> {
     let body = `username=${user.username}&password=${user.password}`;
 
     return this.http.post('/api/public/login',
       body, {headers: this.headers})
-      .map(response => {
-        console.log('From service, login ok!', response);
-        // redirect
-        return 'Ok';
+      .map(() => {
+      this.getUser();
+      this.isAuthenticated = true;
+        return true;
       }).catch(UserService.handleError);
+
   }
 
   public logout(): Observable<Response> {
-    console.log('In logout');
+    this.isAuthenticated = false;
     return this.http.get('/api/logout');
   }
 
@@ -83,5 +78,22 @@ export class UserService {
 
   private static handleError() {
     return 'Error in API occurred';
+  }
+
+  public updateUserFirstAndLastName(firstName: string, lastName: string): Observable<{}>{
+
+    console.log('Firstname', firstName);
+    return this.http.put('/api/user', {firstName: firstName, lastName: lastName})
+      .map(user => {
+        return user.json();
+      });
+  }
+
+  getGithubFullName(username: string): Observable<string> {
+    let url = 'https://api.github.com/users/' + username;
+    return this.http.get(url)
+      .map(response => {
+        return response.json().name;
+      });
   }
 }

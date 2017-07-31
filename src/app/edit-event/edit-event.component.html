@@ -1,7 +1,17 @@
-<div *ngIf="!eventId" class="container-fluid" style="margin-top: 100px;">
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" (click)="changeEditEvent()" [class.active]="editEvent">Edit event</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="changeImageEvent()" [class.active]="editImage">Add or change picture</a>
+    </li>
+  </ul>
+</div>
+<div *ngIf="editEvent" class="container-fluid" style="margin-top: 40px;">
   <div class="row">
     <div class="col-8 offset-2">
-      <h3 class="card-header">Create new event</h3>
+      <h3 class="card-header">Edit event <span *ngIf="errorMessage" class="text-success">{{errorMessage}}</span></h3>
       <div class="form-group row" style="margin-top: 20px;">
         <label for="name" class="col-4 col-form-label">Event name: </label>
         <div class="col-8">
@@ -21,7 +31,7 @@
         <label for="place" class="col-4 col-form-label">Place: </label>
         <div class="col-8">
           <input class="form-control" [(ngModel)]="place" value="Say something about the event" id="place"
-                 name="description">
+                 name="place">
         </div>
       </div>
 
@@ -29,21 +39,23 @@
         <label for="place" class="col-4 col-form-label">City: </label>
         <div class="col-8">
           <div class="dropdown">
+
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-              <span *ngIf="chosenCity">{{chosenCity.name}}</span>
-              <span *ngIf="!chosenCity">Pick a city</span>
+                     aria-expanded="false">
+              <span *ngIf="city">{{city.name}}</span>
             </button>
+
             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button (click)="chosenCity = city" class="dropdown-item" type="button" *ngFor="let city of cities">
-                {{city.name}}
+              <button (click)="city = c" class="dropdown-item" type="button" *ngFor="let c of cities">
+                {{c.name}}
               </button>
             </div>
+
           </div>
         </div>
       </div>
 
-      <div class="form-group row">
+      <!--<div class="form-group row">
         <label class="col-4 col-form-label">Start and end date: </label>
         <div class="col-8">
           <ng-daterangepicker [(ngModel)]="date" [options]="options"></ng-daterangepicker>
@@ -64,11 +76,11 @@
           <md2-datepicker id="what-time-ends" [(ngModel)]="endTime" type="time" placeholder="End time"
                           format="HH:mm"></md2-datepicker>
         </div>
-      </div>
+      </div>-->
 
       <div class="form-group row">
         <div class="col-12">
-          <button class="btn btn-primary float-right" style="margin-left: 150px;" (click)="onCreate()">Submit</button>
+          <button class="btn btn-primary float-right" style="margin-left: 150px;" (click)="onUpdate()">Submit</button>
         </div>
       </div>
 
@@ -76,15 +88,14 @@
   </div>
 </div>
 
-<div *ngIf="eventId">
+
+
+<div *ngIf="editImage">
   <div class="container">
-    <div class="card-header" style="margin-bottom: 25px;margin-top: 25px;">Add picture for your event</div>
     <image-upload [url]="'/api/event/upload/'+ eventId"
                   [max]="1" [buttonCaption]="'Select Image!'">
     </image-upload>
 
-    <button (click)="finish()" class="btn btn-success" style="margin-top: 25px;">Finish!</button>
+    <button class="btn btn-success" style="margin-top: 25px;">Finish!</button>
   </div>
 </div>
-
-

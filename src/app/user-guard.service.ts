@@ -10,14 +10,14 @@ export class UserGuardService implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.userService.isLoggedIn) {
+
+
+    //this.userService.getUser();
+    console.log('User form guard: ', this.userService.isAuthenticated);
+    if (this.userService.isAuthenticated == true) {
       return true;
-    }
-    else {
-      this.router.navigate(['/login'])
-        .then(message => {
-          console.log('Message from UserGuardService', message);
-        });
+    } else {
+      this.router.navigate(['/login']);
       return false;
     }
   }

@@ -1,11 +1,10 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, ApplicationRef } from '@angular/core';
+import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {RegisterUserComponent} from './register-user/register-user.component';
 import {AppRoutingModule} from "./app-routing/app-routing.module";
-import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {UserService} from "./user.service";
@@ -20,6 +19,12 @@ import { NgDateRangePickerModule } from 'ng-daterangepicker';
 import {EventService} from "./event.service";
 import {ImageUploadModule} from "angular2-image-upload";
 import {ImageService} from "angular2-image-upload/lib/image.service";
+import {CommonModule} from '@angular/common';
+import { EditEventComponent } from './edit-event/edit-event.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+
+
 
 
 @NgModule({
@@ -31,17 +36,20 @@ import {ImageService} from "angular2-image-upload/lib/image.service";
     EventsComponent,
     HomeComponent,
     NewEventComponent,
-    MyEventsComponent
+    MyEventsComponent,
+    EditEventComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
     NgDateRangePickerModule,
     Md2DatepickerModule,
-    ImageUploadModule
+    ImageUploadModule,
+    CommonModule,
+    NgxPaginationModule
   ],
   providers: [UserService, UserGuardService, EventService, ImageService],
   bootstrap: [AppComponent]

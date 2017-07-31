@@ -3,18 +3,20 @@ import { CommonModule } from '@angular/common';
 import {Route, RouterModule} from "@angular/router";
 import {RegisterUserComponent} from "../register-user/register-user.component";
 import {LoginUserComponent} from "../login-user/login-user.component";
-import {AppComponent} from "../app.component";
 import {UserGuardService} from "../user-guard.service";
 import {EventsComponent} from "../events/events.component";
 import {HomeComponent} from "../home/home.component";
 import {NewEventComponent} from "../new-event/new-event.component";
 import {MyEventsComponent} from "../my-events/my-events.component";
+import {EditEventComponent} from "../edit-event/edit-event.component";
+import {UserProfileComponent} from "../user-profile/user-profile.component";
 
 const routes: Route[] = [
 
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    pathMatch: 'full'
 
   },
   {
@@ -35,8 +37,18 @@ const routes: Route[] = [
     canActivate: [UserGuardService]
   },
   {
+    path: 'edit-event/:id',
+    component: EditEventComponent,
+    canActivate: [UserGuardService]
+  },
+  {
     path: 'my-events',
     component: MyEventsComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'profile',
+    component: UserProfileComponent,
     canActivate: [UserGuardService]
   }
 ];
@@ -46,6 +58,7 @@ const routes: Route[] = [
     RouterModule.forRoot(routes, {useHash: false}),
     CommonModule
   ],
+  exports: [RouterModule],
   declarations: []
 })
 export class AppRoutingModule { }

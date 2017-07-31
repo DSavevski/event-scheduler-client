@@ -1,0 +1,12 @@
+.card {
+  height: 100%!important;
+}
+
+#save-button {
+  margin-top: 10px;
+}
+
+.card-title {
+  margin-bottom: 40px;
+  margin-top: 20px;
+}

@@ -1,0 +1,38 @@
+<div class="card text-center">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active">General info</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Reset password</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Delete account</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-block">
+    <div class="col-6">
+      <h4 class="card-title text-left">{{user?.firstName}} {{user?.lastName}}</h4>
+      <span *ngIf="message" class="text-success text-left">{{message}}</span>
+      <div class="form-group row">
+        <label for="firstName" class="col-2 col-form-label">First name</label>
+        <div class="col-8">
+          <input class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="lastName" class="col-2 col-form-label">Last name</label>
+        <div class="col-8">
+          <input class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName">
+          <button id="save-button" class="btn btn-primary float-right" (click)="onSave()">Save</button>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>

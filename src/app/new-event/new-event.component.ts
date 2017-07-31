@@ -9,16 +9,17 @@ import {Router} from "@angular/router";
   styleUrls: ['./new-event.component.css']
 })
 export class NewEventComponent implements OnInit {
-  headersRegister = new Headers({'Content-Type': 'multipart/form-data'});
   options: NgDateRangePickerOptions;
   date: any;
   startTime: any;
   endTime: any;
   description: string;
   name: string;
-  // place: string;
   eventId: number;
   picture: any;
+  place: any;
+  cities: any;
+  chosenCity: any;
 
   constructor(private eventService: EventService,
               private router: Router) {
@@ -34,18 +35,23 @@ export class NewEventComponent implements OnInit {
       outputFormat: 'DD/MM/YYYY',
       startOfWeek: 1
     };
-  }
 
-  onCreate(){
-    this.eventService.createEvent(this.name, this.description, this.date, this.startTime, this.endTime)
-      .subscribe(response => {
-        this.eventId = response;
-
+    this.eventService.getCities()
+      .subscribe(cities => {
+        this.cities = cities;
       });
   }
 
-  onChange(event) {
-    this.picture = event.srcElement.files;
+  onCreate() {
+    this.eventService.createEvent(this.name, this.description, this.date, this.startTime,
+      this.endTime, this.place, this.chosenCity.id)
+      .subscribe(response => {
+        this.eventId = response;
+      });
+  }
+
+  finish() {
+    this.router.navigate(['/events']);
   }
 
 }

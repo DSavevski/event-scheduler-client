@@ -1,4 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12" *ngFor="let event of events">
+      <div class="card">
+        <h5 class="card-header text-center">
+          Start: {{event.startDate.dayOfWeek}}, {{event.startDate.dayOfMonth}} {{event.startDate.month}}
+          {{event.startDate.year}}, {{event.startDate.hour}}:{{event.startDate.minute}}h
+        </h5>
+        <div class="card-block">
+          <div class="row">
+            <div class="col-4">
+              <img class="img-fluid" *ngIf="event?.picture" src="/api/public/image/{{event?.picture.id}}"
+                   alt="Generic placeholder image">
+            </div>
+            <div class="col-8">
+              <h4 class="card-title">{{event.name}}</h4>
+              <p class="card-text">{{event.description}}</p>
+              <span class="card-text text-danger">City: {{event.city.name}} </span> |
+              <span class="card-text text-danger">Place: {{event.place}}</span> |
+              <span class="card-text text-danger">Attending: {{event.attendingUsers.length}}</span>
+              <button (click)="deleteEvent(event.id)" class="btn btn-outline-danger float-right">Delete</button>
+              <a (click)="edit(event.id)" style="margin-right: 10px;" class="btn btn-outline-secondary float-right">Edit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<ul>
-  <li *ngFor="let event of events">{{event?.name}}</li>
-</ul>

@@ -1,4 +1,57 @@
+<div class="container">
+  <div class="row">
 
-<ul>
-  <li *ngFor="let event of allEvents">{{event?.name}}</li>
-</ul>
+    <div class="col-12">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <button class="btn btn-secondary" (click)="getAllEvents()">All cities</button>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Filter by city</a>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" (click)="filter(city.name)" *ngFor="let city of cities">{{city.name}}</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-12" *ngFor="let event of allEvents | paginate: { itemsPerPage: 2, currentPage: p}">
+      <div class="card">
+        <h5 class="card-header text-center">
+          {{event.startDate.dayOfWeek}}, {{event.startDate.dayOfMonth}} {{event.startDate.month}}
+          {{event.startDate.year}} {{event.startDate.hour}}:{{event.startDate.minute}}h
+        </h5>
+        <div class="card-block">
+          <div class="row">
+            <div class="col-4">
+              <img *ngIf="event?.picture" class="img-fluid" src="/api/public/image/{{event?.picture?.id}}"
+                   alt="Generic placeholder image">
+            </div>
+            <div class="col-8">
+              <h4 class="card-title">{{event.name}}</h4>
+              <p class="card-text">{{event.description}}</p>
+              <span class="card-text text-danger">City: {{event.city.name}}</span>|
+              <span class="card-text text-danger">Place: {{event.place}}</span> |
+              <span class="card-text text-danger">Attending: {{event.attendingUsers.length}}</span>
+              <div class="btn-group float-right" *ngIf="loggedUser">
+                <button *ngIf="!canGo(event)" (click)="goingToEvent(event.id)"
+                        class="btn btn-outline-success">Going
+                </button>
+                <button *ngIf="canGo(event)" (click)="cancelEvent(event.id)"
+                        class="btn btn-secondary"> Not attending
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 text-center">
+      <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+  </div>
+</div>
+
+
