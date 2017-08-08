@@ -9,9 +9,12 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
-  constructor() {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
+
+    this.userService.getUser().subscribe();
+
   }
 }

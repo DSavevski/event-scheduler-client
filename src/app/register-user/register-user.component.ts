@@ -23,6 +23,10 @@ export class RegisterUserComponent implements OnInit {
   private searchTerms = new Subject<string>();
   tmp = "test";
 
+  confirmPassword: string;
+  message: string;
+  userId: number;
+
   constructor(private userService: UserService,
               private router: Router) {
     this.user = new User();
@@ -44,11 +48,25 @@ export class RegisterUserComponent implements OnInit {
   }
 
   onCreate() {
-    this.userService.registerUser(this.user.firstName, this.user.lastName, this.user.username, this.user.password);
-    this.router.navigate(['/login']).then(() => window.location.reload());
+    this.message = null;
+    if (this.confirmPassword === this.user.password) {
+      this.userService.registerUser(this.user.firstName, this.user.lastName, this.user.username, this.user.password)
+          .subscribe(response => {
+            this.userId = response;
+            console.log(this.userId);
+      });
+    } else {
+      this.message = "Your passwords do not match!";
+      this.user.password = null;
+      this.confirmPassword = null;
+    }
   }
 
-  checkIfUsernameExists(){
+  checkIfUsernameExists() {
     return this.tmp !== 'test' && !this.tmp['username'];
+  }
+
+  finish() {
+    this.router.navigate(['/login']);
   }
 }

@@ -18,11 +18,36 @@
               <span class="card-text text-danger">City: {{event.city.name}} </span> |
               <span class="card-text text-danger">Place: {{event.place}}</span> |
               <span class="card-text text-danger">Attending: {{event.attendingUsers.length}}</span>
-              <button (click)="deleteEvent(event.id)" class="btn btn-outline-danger float-right">Delete</button>
-              <a (click)="edit(event.id)" style="margin-right: 10px;" class="btn btn-outline-secondary float-right">Edit</a>
+              <button (click)="eventIdToDelete = event.id"
+                      class="btn btn-outline-danger float-right"
+                      data-toggle="modal"
+                      data-target="#myModal">Delete</button>
+              <button (click)="edit(event.id)" style="margin-right: 10px;" class="btn btn-outline-secondary float-right">Edit</button>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you really want to delete this event?
+        {{eventIdToDelete}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button (click)="deleteEvent(eventIdToDelete)" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
       </div>
     </div>
   </div>

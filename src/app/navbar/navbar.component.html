@@ -6,42 +6,59 @@
   </button>
   <a class="navbar-brand" routerLink="/">Event Scheduler</a>
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02" >
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-md-0">
       <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"routerLink="/">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}" routerLink="/">Home
+          <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}" routerLink="/events">Events</a>
+        <a class="nav-link" routerLinkActive="active-link" routerLink="/events">Events</a>
       </li>
       <li class="nav-item" *ngIf="isAuthenticated">
-        <a class="nav-link" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:true}" routerLink="/my-events">My Events</a>
+        <a class="nav-link" routerLinkActive="active-link" routerLink="/my-events">My Events</a>
       </li>
       <li class="nav-item" *ngIf="isAuthenticated">
-        <a class="nav-link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}" routerLink="/new-event">Create event</a>
+        <a class="nav-link" routerLinkActive="active-link" routerLink="/new-event">Create event</a>
       </li>
 
 
     </ul>
 
+    <img *ngIf="user?.picture && provider === 'LOCAL'" class="profile-picture" src="/api/public/image/{{user?.picture?.id}}"
+         alt="Profile picture" width="40" height="40">
+
+
     <form class="form-inline my-2 my-lg-0">
       <div class="btn-group">
-        <!--<img *ngIf="isAuthenticated" src="https://github.com/{{user.username}}.png?size=40" alt="">-->
-        <button *ngIf="isAuthenticated"  type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          {{ user.username }}
-        </button>`
-        <button *ngIf="!isAuthenticated" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+
+        <img *ngIf="isAuthenticated && provider === 'FACEBOOK'"
+             src="https://graph.facebook.com/{{user.username}}/picture" class="profile-picture" alt="Profile picture" width="40" height="40">
+        <img *ngIf="isAuthenticated && provider === 'GITHUB'"
+             src="https://github.com/{{user.username}}.png?size=40" class="profile-picture" alt="Profile picture">
+
+
+        <button *ngIf="isAuthenticated" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-expanded="false">
+          {{ user.firstName }}
+        </button>
+        `
+        <button *ngIf="!isAuthenticated" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-expanded="false">
           Login
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-          <a *ngIf="isAuthenticated" routerLink="/profile" class="dropdown-item">Profile</a>
-          <a *ngIf="isAuthenticated" (click)="goHome()" class="dropdown-item">Logout</a>
+          <a *ngIf="isAuthenticated && provider === 'LOCAL'" routerLink="/profile" class="dropdown-item">Profile</a>
+          <a *ngIf="isAuthenticated" (click)="goHome()" class="dropdown-item" href="#">Logout</a>
+
           <div *ngIf="!isAuthenticated">
             <a class="dropdown-item" routerLink="/register">Register</a>
             <a class="dropdown-item" routerLink="/login">Login with your account</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/api/public/login/github">Login with Github</a>
+            <li ><a class="dropdown-item" href="/api/public/login/github">Login with Github</a></li>
+            <li><a class="dropdown-item" href="/api/public/login/facebook">Login with Facebook</a></li>
           </div>
+
         </div>
       </div>
     </form>

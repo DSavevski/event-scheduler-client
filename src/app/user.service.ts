@@ -4,7 +4,7 @@ import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {User} from "./user.model";
-import {Router} from "@angular/router";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class UserService {
@@ -12,24 +12,28 @@ export class UserService {
   isAuthenticated = Observable.create();
   user: Observable<{}>;
 
+  private newUser: Subject<User> = new Subject<User>();
+  subjectUser = this.newUser.asObservable();
+
   private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
   private headersRegister = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) {}
 
   getUser(): Observable<{}> {
-    if (this.user == null) {
+    if (this.isAuthenticated) {
       this.user = this.http.get('/api/user')
         .map(response => {
 
           if(response.text() != '') {
             this.isAuthenticated = true;
+            this.newUser.next(response.json() as User);
             return response.json();
           }else{
             this.isAuthenticated = false;
           }
         })
-        .catch(error => {
+        .catch(() => {
           this.isAuthenticated = false;
           return Observable.of(null);
         });
@@ -37,6 +41,13 @@ export class UserService {
     return this.user;
   }
 
+  public checkUser(): Observable<boolean>{
+
+  return this.http.get('/api/user/check')
+      .map(res => {
+      return res.json();
+      });
+}
 
   public login(user: User): Observable<{}> {
     let body = `username=${user.username}&password=${user.password}`;
@@ -56,16 +67,14 @@ export class UserService {
     return this.http.get('/api/logout');
   }
 
-  public registerUser(firstName: string, lastName: string, username: string, password: string): Promise<any> {
+  public registerUser(firstName: string, lastName: string, username: string, password: string): Observable<any> {
     return this.http
       .post('/api/public/register', JSON.stringify(
         {firstName: firstName, lastName: lastName, username: username, password: password}),
         {headers: this.headersRegister})
-      .toPromise()
-      .then(res => {
-        console.log('JSON: ', res.json());
-        //this.login(res.json());
-      })
+        .map((msg) => {
+          return msg.text();
+        })
       .catch(UserService.handleError);
 
   }
@@ -89,11 +98,19 @@ export class UserService {
       });
   }
 
-  getGithubFullName(username: string): Observable<string> {
-    let url = 'https://api.github.com/users/' + username;
-    return this.http.get(url)
+  public resetPassword(oldPassword: string, newPassword: string): Observable<string>{
+    return this.http
+      .post('/api/user/reset',
+       {oldPassword: oldPassword, newPassword : newPassword})
       .map(response => {
-        return response.json().name;
+        return response.json();
+      });
+  }
+
+  public getProvider() : Observable<string> {
+    return this.http.get('/api/user/provider')
+      .map(response => {
+        return response.json().provider;
       });
   }
 }

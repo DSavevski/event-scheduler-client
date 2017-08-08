@@ -1,21 +1,21 @@
-<div class="container">
+<div *ngIf="!userId" class="container">
   <div class="row">
     <div class="col-10">
       <h3 class="card-header">Register</h3>
     </div>
   </div>
-  <form (ngSubmit)="onCreate()">
+  <form #regForm="ngForm">
     <div class="form-group row">
       <label for="firstName" class="col-2 col-form-label">First name</label>
       <div class="col-8">
-        <input class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName">
+        <input required class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="lastName" class="col-2 col-form-label">Last name</label>
       <div class="col-8">
-        <input class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName">
+        <input required  class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName">
       </div>
     </div>
     <div class="form-group row">
@@ -23,7 +23,7 @@
       <label for="username" class="col-2 col-form-label">Username</label>
       <div class="col-8">
         <div *ngIf="checkIfUsernameExists()" class="text-danger form-control-feedback">Sorry, that username's taken. Try another?</div>
-        <input class="form-control" id="username" name="username"
+        <input required class="form-control" id="username" name="username"
                #inputBox (keyup)="search(inputBox.value)" [(ngModel)]="user.username">
       </div>
     </div>
@@ -31,18 +31,38 @@
     <div class="form-group row">
       <label for="password" class="col-2 col-form-label">Password</label>
       <div class="col-8">
-        <input class="form-control" type="password" id="password" name="password" [(ngModel)]="user.password">
+        <input required class="form-control" type="password" id="password" name="password" [(ngModel)]="user.password">
       </div>
     </div>
+
+    <div class="form-group row">
+      <label for="confirmPassword" class="col-2 col-form-label">Confirm password</label>
+      <div class="col-8">
+        <input  type="password" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+        <div class="form-control-feedback text-danger">{{message}}</div>
+      </div>
+    </div>
+
     <div class="form-group row">
       <div class="col-10">
-        <button class="btn btn-primary float-sm-right" [disabled]="checkIfUsernameExists()" [class.disabled]="checkIfUsernameExists()">Submit
+        <button [disabled]="!regForm.valid" (click)="onCreate()" class="btn btn-primary float-sm-right" [disabled]="checkIfUsernameExists()" [class.disabled]="checkIfUsernameExists()">Submit
         </button>
       </div>
     </div>
   </form>
 </div>
 
+
+<div *ngIf="userId">
+  <div class="container">
+    <div class="card-header" style="margin-bottom: 25px;margin-top: 25px;">Add picture for your event</div>
+    <image-upload [url]="'/api/user/upload/'+ userId"
+                  [max]="1" [buttonCaption]="'Select Image!'">
+    </image-upload>
+
+    <button (click)="finish()" class="btn btn-success btn-block" style="margin-top: 25px;">Finish!</button>
+  </div>
+</div>
 <!--<p *ngIf="tmp !== 'test' && !tmp?.username" class="text-danger" style="margin-left: 350px;">This username already
   exists!</p>-->
 

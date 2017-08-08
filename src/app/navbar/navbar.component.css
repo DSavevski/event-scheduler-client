@@ -9,3 +9,9 @@
 .active-link{
   color: orange!important;
 }
+
+.profile-picture {
+  border-radius: 70%;
+  margin-right: 5px;
+}
+

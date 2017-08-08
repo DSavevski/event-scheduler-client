@@ -11,6 +11,8 @@ export class MyEventsComponent implements OnInit {
 
   events: any;
 
+  eventIdToDelete: number;
+
   constructor(private eventService: EventService,
               private router: Router) {
   }

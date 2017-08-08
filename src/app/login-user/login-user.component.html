@@ -5,7 +5,7 @@
         <h3 class="card-header">Login in with your account</h3>
       </div>
     </div>
-    <form (ngSubmit)="onSubmit()">
+    <form>
 
       <div class="form-group row">
         <label for="username" class="col-2 col-form-label">Username</label>
@@ -25,11 +25,23 @@
 
       <div class="form-group row">
         <div class="col-10">
-          <button class="btn btn-success float-sm-right">Login
+          <button style="margin-left: 10px;" class="btn btn-danger float-sm-right">Forgot password
+          </button>
+          <button (click)="onSubmit()" class="btn btn-success float-sm-right">Login
           </button>
         </div>
       </div>
 
+      <div class="row form-group">
+        <div class="col-10">
+          <a href="/api/public/login/facebook" class="btn btn-social btn-facebook float-sm-right" style="margin-left: 10px;">
+            <span class="fa fa-facebook"></span> Sign in with Facebook
+          </a>
+          <a href="/api/public/login/github" class="btn btn-social btn-github float-sm-right">
+            <span class="fa fa-github"></span> Sign in with Github
+          </a>
+        </div>
+      </div>
     </form>
   </div>
 </div>

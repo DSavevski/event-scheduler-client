@@ -13,7 +13,7 @@ export class UserGuardService implements CanActivate {
 
 
     //this.userService.getUser();
-    console.log('User form guard: ', this.userService.isAuthenticated);
+    //console.log('User form guard: ', this.userService.isAuthenticated);
     if (this.userService.isAuthenticated == true) {
       return true;
     } else {

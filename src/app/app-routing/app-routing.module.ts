@@ -10,6 +10,7 @@ import {NewEventComponent} from "../new-event/new-event.component";
 import {MyEventsComponent} from "../my-events/my-events.component";
 import {EditEventComponent} from "../edit-event/edit-event.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
+import {NotFoundComponent} from "../not-found/not-found.component";
 
 const routes: Route[] = [
 
@@ -50,6 +51,10 @@ const routes: Route[] = [
     path: 'profile',
     component: UserProfileComponent,
     canActivate: [UserGuardService]
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 

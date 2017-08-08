@@ -10,16 +10,20 @@ import {Router} from "@angular/router";
 })
 export class NewEventComponent implements OnInit {
   options: NgDateRangePickerOptions;
+
   date: any;
   startTime: any;
   endTime: any;
   description: string;
   name: string;
-  eventId: number;
   picture: any;
   place: any;
   cities: any;
   chosenCity: any;
+
+  eventId: number;
+
+  message: string;
 
   constructor(private eventService: EventService,
               private router: Router) {
@@ -43,11 +47,20 @@ export class NewEventComponent implements OnInit {
   }
 
   onCreate() {
-    this.eventService.createEvent(this.name, this.description, this.date, this.startTime,
-      this.endTime, this.place, this.chosenCity.id)
-      .subscribe(response => {
-        this.eventId = response;
-      });
+    console.log("create");
+    this.message = null;
+    if (this.date != null && this.startTime != null
+      && this.endTime != null && this.chosenCity != null && this.name != null && this.description != null
+      && this.place != null) {
+
+      this.eventService.createEvent(this.name, this.description, this.date, this.startTime,
+        this.endTime, this.place, this.chosenCity.id)
+        .subscribe(response => {
+          this.eventId = response;
+        });
+    } else {
+      this.message = "Please fill out all the fields!";
+    }
   }
 
   finish() {

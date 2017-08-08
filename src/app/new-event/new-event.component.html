@@ -5,15 +5,15 @@
       <div class="form-group row" style="margin-top: 20px;">
         <label for="name" class="col-4 col-form-label">Event name: </label>
         <div class="col-8">
-          <input class="form-control" id="name" name="name" [(ngModel)]="name">
+          <input class="form-control" id="name" name="name" [(ngModel)]="name" required>
         </div>
       </div>
 
       <div class="form-group row">
         <label for="description" class="col-4 col-form-label">Description: </label>
         <div class="col-8">
-          <input class="form-control" [(ngModel)]="description" value="Say something about the event" id="description"
-                 name="description">
+          <textarea class="form-control" [(ngModel)]="description" placeholder="Say something about the event..." id="description"
+                    name="description" required></textarea>
         </div>
       </div>
 
@@ -21,7 +21,7 @@
         <label for="place" class="col-4 col-form-label">Place: </label>
         <div class="col-8">
           <input class="form-control" [(ngModel)]="place" value="Say something about the event" id="place"
-                 name="description">
+                 name="description" required>
         </div>
       </div>
 
@@ -65,13 +65,14 @@
                           format="HH:mm"></md2-datepicker>
         </div>
       </div>
-
+        <div *ngIf="message" class="alert alert-danger" role="alert">
+          <strong>Oh snap!</strong> {{message}}
+        </div>
       <div class="form-group row">
         <div class="col-12">
-          <button class="btn btn-primary float-right" style="margin-left: 150px;" (click)="onCreate()">Submit</button>
+          <button  class="btn btn-primary float-right" style="margin-left: 150px;" (click)="onCreate()">Submit</button>
         </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -83,8 +84,7 @@
                   [max]="1" [buttonCaption]="'Select Image!'">
     </image-upload>
 
-    <button (click)="finish()" class="btn btn-success" style="margin-top: 25px;">Finish!</button>
+    <button (click)="finish()" class="btn btn-success btn-block" style="margin-top: 25px;">Finish!</button>
   </div>
 </div>
-
 

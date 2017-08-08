@@ -23,6 +23,7 @@ import {CommonModule} from '@angular/common';
 import { EditEventComponent } from './edit-event/edit-event.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 
@@ -38,7 +39,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NewEventComponent,
     MyEventsComponent,
     EditEventComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -62,4 +62,8 @@ export class EditEventComponent implements OnInit {
         this.errorMessage = "Changes saved!"
       });
   }
+
+    finish() {
+        this.router.navigate(['/events']);
+    }
 }

@@ -29,10 +29,7 @@ export class LoginUserComponent implements OnInit {
       .login(this.user)
       .subscribe(response => {
         if (response === true) {
-          window.location.reload(); //needs to change
-          this.router.navigate(['/']).then(msg => {
-            console.log('Msg from login component');
-          });
+          this.router.navigate(['/']);
         }
         else
           this.messages = 'Incorrect username or password!';

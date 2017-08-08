@@ -5,3 +5,11 @@
 .card-header {
   margin-bottom: 10px;
 }
+
+.btn-social{
+  color:white!important;
+}
+
+.btn-social:hover{
+  cursor: pointer;
+}

@@ -15,6 +15,8 @@ export class EventsComponent implements OnInit {
   loggedUser: any;
   cities: any;
 
+  chosenCity: string;
+
   constructor(private eventService: EventService,
               private userService: UserService) {
   }
@@ -69,8 +71,8 @@ export class EventsComponent implements OnInit {
       });
   }
 
-  filter(cityName: string){
-      this.eventService.filterCities(cityName)
+  filter(){
+      this.eventService.filterCities(this.chosenCity)
         .subscribe(filteredEvents => {
           this.allEvents = filteredEvents;
         });
