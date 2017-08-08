@@ -12,7 +12,13 @@ export class TestComponent implements OnInit {
   ngOnInit() {
   }
 
+
   test(){
+
+  }
+
+
+  test2(){
 
   }
 
