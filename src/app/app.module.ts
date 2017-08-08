@@ -24,6 +24,7 @@ import { EditEventComponent } from './edit-event/edit-event.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { Test2Component } from './test2/test2.component';
 
 
 
@@ -40,7 +41,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MyEventsComponent,
     EditEventComponent,
     UserProfileComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    Test2Component
   ],
   imports: [
     BrowserModule,
