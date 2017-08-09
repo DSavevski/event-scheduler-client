@@ -50,7 +50,7 @@ export class RegisterUserComponent implements OnInit {
   onCreate() {
     this.message = null;
     if (this.confirmPassword === this.user.password) {
-      this.userService.registerUser(this.user.firstName, this.user.lastName, this.user.username, this.user.password)
+      this.userService.registerUser(this.user.firstName, this.user.lastName, this.user.username, this.user.password, this.user.email)
           .subscribe(response => {
             this.userId = response;
             console.log(this.userId);

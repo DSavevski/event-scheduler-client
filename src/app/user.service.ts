@@ -59,10 +59,10 @@ export class UserService {
     return this.http.get('/api/logout');
   }
 
-  public registerUser(firstName: string, lastName: string, username: string, password: string): Observable<any> {
+  public registerUser(firstName: string, lastName: string, username: string, password: string, email:string): Observable<any> {
     return this.http
       .post('/api/public/register', JSON.stringify(
-        {firstName: firstName, lastName: lastName, username: username, password: password}),
+        {firstName: firstName, lastName: lastName, username: username, password: password, email: email}),
         {headers: this.headersRegister})
         .map((msg) => {
           return msg.text();
