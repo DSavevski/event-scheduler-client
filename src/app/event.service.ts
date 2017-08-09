@@ -37,7 +37,6 @@ export class EventService {
 
   public updateEvent(name: string, place: string, description: string, cityId: number, id: number): Observable<any> {
     let url = '/api/event';
-    console.log('id: ', id);
     return this.http.put(url, {
       name: name, place: place, description: description,
       id: id, cityId: cityId

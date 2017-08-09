@@ -41,14 +41,6 @@ export class UserService {
     return this.user;
   }
 
-  public checkUser(): Observable<boolean>{
-
-  return this.http.get('/api/user/check')
-      .map(res => {
-      return res.json();
-      });
-}
-
   public login(user: User): Observable<{}> {
     let body = `username=${user.username}&password=${user.password}`;
 

@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {RegisterUserComponent} from './register-user/register-user.component';
@@ -24,8 +23,6 @@ import { EditEventComponent } from './edit-event/edit-event.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { Test2Component } from './test2/test2.component';
-import { TestComponent } from './test/test.component';
 
 
 
@@ -43,9 +40,7 @@ import { TestComponent } from './test/test.component';
     MyEventsComponent,
     EditEventComponent,
     UserProfileComponent,
-    NotFoundComponent,
-    Test2Component,
-    TestComponent
+    NotFoundComponent
 
   ],
   imports: [

@@ -15,7 +15,6 @@ export class NavbarComponent implements OnInit {
 
   isAuthenticated = false;
   user: User;
-  checkUser: boolean;
   provider: string;
 
 
@@ -30,10 +29,6 @@ export class NavbarComponent implements OnInit {
       .subscribe(user => {
         this.user = user as User;
         this.isAuthenticated = user != null;
-        this.userService.checkUser()
-            .subscribe(res => {
-              this.checkUser= res;
-            });
       });
 
     this.userService.subjectUser
@@ -52,10 +47,6 @@ export class NavbarComponent implements OnInit {
       this.isAuthenticated = false;
       this.user = null;
       this.router.navigate(['']);
-      this.userService.checkUser()
-          .subscribe(res => {
-            this.checkUser = res;
-          });
     });
   }
 }

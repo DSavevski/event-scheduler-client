@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EventService} from "../event.service";
 import {Router, ActivatedRoute, ParamMap} from "@angular/router";
 
@@ -23,7 +23,8 @@ export class EditEventComponent implements OnInit {
 
   constructor(private eventService: EventService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.route.paramMap
@@ -34,7 +35,7 @@ export class EditEventComponent implements OnInit {
         this.description = event.description;
         this.place = event.place;
         this.city = event.city;
-        this.eventId=event.id;
+        this.eventId = event.id;
       });
 
     this.eventService.getCities()
@@ -43,27 +44,29 @@ export class EditEventComponent implements OnInit {
       });
   }
 
-  changeEditEvent(){
+  changeEditEvent() {
     this.editEvent = true;
     this.editImage = false;
   }
 
-  changeImageEvent(){
+  changeImageEvent() {
     this.editEvent = false;
     this.editImage = true;
   }
 
-  onUpdate(){
+  onUpdate() {
     this.errorMessage = null;
 
     this.eventService.updateEvent(this.name, this.place, this.description, this.city.id, this.eventId)
-      .subscribe(event => {
-        console.log("Event from callback: ", event);
-        this.errorMessage = "Changes saved!"
+      .subscribe(res => {
+        if (res == true)
+          this.errorMessage = "Changes saved!";
+        else
+          this.errorMessage = "Error! Changes were not saved!";
       });
   }
 
-    finish() {
-        this.router.navigate(['/events']);
-    }
+  finish() {
+    this.router.navigate(['/events']);
+  }
 }
