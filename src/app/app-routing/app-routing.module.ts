@@ -11,6 +11,7 @@ import {MyEventsComponent} from "../my-events/my-events.component";
 import {EditEventComponent} from "../edit-event/edit-event.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
 import {NotFoundComponent} from "../not-found/not-found.component";
+import {AccountActivationComponent} from "../account-activation/account-activation.component";
 
 const routes: Route[] = [
 
@@ -51,6 +52,10 @@ const routes: Route[] = [
     path: 'profile',
     component: UserProfileComponent,
     canActivate: [UserGuardService]
+  },
+  {
+    path: 'registration',
+    component: AccountActivationComponent
   },
   {
     path: '**',

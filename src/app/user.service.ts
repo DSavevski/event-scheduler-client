@@ -105,4 +105,13 @@ export class UserService {
         return response.json().provider;
       });
   }
+
+  public activateAccount(token: string) : Observable<string> {
+    let url = "/api/public/registrationConfirm?token=" + token;
+    console.log(url);
+    return this.http.get(url)
+      .map(msg =>{
+        return msg.text();
+      });
+  }
 }
