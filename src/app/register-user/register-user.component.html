@@ -30,6 +30,7 @@
       <label for="username" class="col-2 col-form-label">Username</label>
       <div class="col-8">
         <div *ngIf="checkIfUsernameExists()" class="text-danger form-control-feedback">Sorry, that username's taken. Try another?</div>
+        <div *ngIf="!checkIfUsernameExists() && inputBox.value != ''" class="text-success form-control-feedback">Success! This username is available.</div>
         <input required class="form-control" id="username" name="username"
                #inputBox (keyup)="search(inputBox.value)" [(ngModel)]="user.username">
       </div>
@@ -52,7 +53,7 @@
 
     <div class="form-group row">
       <div class="col-10">
-        <button [disabled]="!regForm.valid" (click)="onCreate()" class="btn btn-primary float-sm-right" [disabled]="checkIfUsernameExists()" [class.disabled]="checkIfUsernameExists()">Submit
+        <button [disabled]="!regForm.valid || checkIfUsernameExists()" (click)="onCreate()" class="btn btn-primary float-sm-right"  [class.disabled]="checkIfUsernameExists()">Submit
         </button>
       </div>
     </div>

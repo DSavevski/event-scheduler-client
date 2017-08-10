@@ -12,6 +12,8 @@ import {EditEventComponent} from "../edit-event/edit-event.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
 import {NotFoundComponent} from "../not-found/not-found.component";
 import {AccountActivationComponent} from "../account-activation/account-activation.component";
+import {ForgotPasswordComponent} from "../forgot-password/forgot-password.component";
+import {ResetForgottenPasswordComponent} from "../reset-forgotten-password/reset-forgotten-password.component";
 
 const routes: Route[] = [
 
@@ -56,6 +58,14 @@ const routes: Route[] = [
   {
     path: 'registration',
     component: AccountActivationComponent
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'reset-password',
+    component: ResetForgottenPasswordComponent
   },
   {
     path: '**',

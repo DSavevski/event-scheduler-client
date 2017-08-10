@@ -18,18 +18,19 @@ export class UserService {
   private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
   private headersRegister = new Headers({'Content-Type': 'application/json'});
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+  }
 
   getUser(): Observable<{}> {
     if (this.isAuthenticated) {
       this.user = this.http.get('/api/user')
         .map(response => {
 
-          if(response.text() != '') {
+          if (response.text() != '') {
             this.isAuthenticated = true;
             this.newUser.next(response.json() as User);
             return response.json();
-          }else{
+          } else {
             this.isAuthenticated = false;
           }
         })
@@ -47,8 +48,8 @@ export class UserService {
     return this.http.post('/api/public/login',
       body, {headers: this.headers})
       .map(() => {
-      this.getUser();
-      this.isAuthenticated = true;
+        this.getUser();
+        this.isAuthenticated = true;
         return true;
       }).catch(UserService.handleError);
 
@@ -59,14 +60,14 @@ export class UserService {
     return this.http.get('/api/logout');
   }
 
-  public registerUser(firstName: string, lastName: string, username: string, password: string, email:string): Observable<any> {
+  public registerUser(firstName: string, lastName: string, username: string, password: string, email: string): Observable<any> {
     return this.http
       .post('/api/public/register', JSON.stringify(
         {firstName: firstName, lastName: lastName, username: username, password: password, email: email}),
         {headers: this.headersRegister})
-        .map((msg) => {
-          return msg.text();
-        })
+      .map((msg) => {
+        return msg.text();
+      })
       .catch(UserService.handleError);
 
   }
@@ -74,14 +75,21 @@ export class UserService {
   public checkForDuplicateUsername(username: string): Observable<string> {
     return this.http
       .get(`/api/public/duplicate/${username}`)
-      .map(response => response.json());
+      .map(response => response.text());
+  }
+
+  public checkIfUsernameOrEmailExists(usernameOrEmail: string): Observable<string> {
+    let url = "/api/public/check?usernameOrEmail=" + usernameOrEmail;
+    return this.http
+      .get(url)
+      .map(response => response.text());
   }
 
   private static handleError() {
     return 'Error in API occurred';
   }
 
-  public updateUserFirstAndLastName(firstName: string, lastName: string): Observable<{}>{
+  public updateUserFirstAndLastName(firstName: string, lastName: string): Observable<{}> {
 
     console.log('Firstname', firstName);
     return this.http.put('/api/user', {firstName: firstName, lastName: lastName})
@@ -90,27 +98,42 @@ export class UserService {
       });
   }
 
-  public resetPassword(oldPassword: string, newPassword: string): Observable<string>{
+  public resetPassword(oldPassword: string, newPassword: string): Observable<string> {
     return this.http
       .post('/api/user/reset',
-       {oldPassword: oldPassword, newPassword : newPassword})
+        {oldPassword: oldPassword, newPassword: newPassword})
       .map(response => {
         return response.json();
       });
   }
 
-  public getProvider() : Observable<string> {
+  public sendUsernameOrEmailToResetForgottenPassword(usernameOrEmail:string): Observable<string>{
+    let api = '/api/public/forgot/' + usernameOrEmail;
+    return this.http.get(api)
+      .map(res => {return res.text()})
+  }
+
+  public resetForgottenPassword(token: string, password: string): Observable<string> {
+    return this.http
+      .post('/api/public/resetForgottenPassword',
+        {token: token, password: password}, {headers: this.headersRegister})
+      .map(response => {
+        return response.text();
+      });
+  }
+
+  public getProvider(): Observable<string> {
     return this.http.get('/api/user/provider')
       .map(response => {
         return response.json().provider;
       });
   }
 
-  public activateAccount(token: string) : Observable<string> {
+  public activateAccount(token: string): Observable<string> {
     let url = "/api/public/registrationConfirm?token=" + token;
     console.log(url);
     return this.http.get(url)
-      .map(msg =>{
+      .map(msg => {
         return msg.text();
       });
   }

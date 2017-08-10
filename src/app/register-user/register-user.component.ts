@@ -19,9 +19,10 @@ import {User} from "../user.model";
   styleUrls: ['./register-user.component.css']
 })
 export class RegisterUserComponent implements OnInit {
-  user: User;
+
   private searchTerms = new Subject<string>();
-  tmp = "test";
+  user: User;
+  response;
 
   confirmPassword: string;
   message: string;
@@ -43,7 +44,7 @@ export class RegisterUserComponent implements OnInit {
       .switchMap(term => term   // switch to new observable each time the term changes
         ? this.userService.checkForDuplicateUsername(term) // return the http search observable
         : Observable.of<string>()).subscribe(val => { // or the observable of empty heroes if there was no search term
-      this.tmp = val;
+      this.response = val;
     });
   }
 
@@ -51,10 +52,9 @@ export class RegisterUserComponent implements OnInit {
     this.message = null;
     if (this.confirmPassword === this.user.password) {
       this.userService.registerUser(this.user.firstName, this.user.lastName, this.user.username, this.user.password, this.user.email)
-          .subscribe(response => {
-            this.userId = response;
-            console.log(this.userId);
-      });
+        .subscribe(response => {
+          this.userId = response;
+        });
     } else {
       this.message = "Your passwords do not match!";
       this.user.password = null;
@@ -63,7 +63,7 @@ export class RegisterUserComponent implements OnInit {
   }
 
   checkIfUsernameExists() {
-    return this.tmp !== 'test' && !this.tmp['username'];
+    return this.response !== undefined && this.response == 'true';
   }
 
   finish() {
