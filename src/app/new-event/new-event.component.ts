@@ -9,20 +9,19 @@ import {Router} from "@angular/router";
   styleUrls: ['./new-event.component.css']
 })
 export class NewEventComponent implements OnInit {
+
   options: NgDateRangePickerOptions;
 
   date: any;
+  name: string;
+  description: string;
   startTime: any;
   endTime: any;
-  description: string;
-  name: string;
-  picture: any;
   place: any;
   cities: any;
   chosenCity: any;
-
+  //picture: any;
   eventId: number;
-
   message: string;
 
   constructor(private eventService: EventService,
@@ -49,11 +48,11 @@ export class NewEventComponent implements OnInit {
   onCreate() {
     console.log("create");
     this.message = null;
-    if (this.date != null && this.startTime != null
+    if (this.startTime != null
       && this.endTime != null && this.chosenCity != null && this.name != null && this.description != null
       && this.place != null) {
 
-      this.eventService.createEvent(this.name, this.description, this.date, this.startTime,
+      this.eventService.createEvent(this.name, this.description,this.startTime,
         this.endTime, this.place, this.chosenCity.id)
         .subscribe(response => {
           this.eventId = response;

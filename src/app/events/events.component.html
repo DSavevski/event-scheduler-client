@@ -17,12 +17,13 @@
     </div>
 
 
-    <div *ngIf="allEvents">
-      <div class="col-12" *ngFor="let event of allEvents | paginate: { itemsPerPage: 2, currentPage: p}">
+
+      <div class="col-12"  *ngFor="let event of allEvents | paginate: { itemsPerPage: 2, currentPage: p}">
         <div class="card">
           <h5 class="card-header text-center">
-            {{event.startDate.dayOfWeek}}, {{event.startDate.dayOfMonth}} {{event.startDate.month}}
-            {{event.startDate.year}} {{event.startDate.hour}}:{{event.startDate.minute}}h
+            <!--{{event.startDate.dayOfWeek}}, {{event.startDate.dayOfMonth}} {{event.startDate.month}}-->
+            <!--{{event.startDate.year}} {{event.startDate.hour}}:{{event.startDate.minute}}h-->
+            {{event.startDate | date}}
           </h5>
           <div class="card-block">
             <div class="row">
@@ -49,7 +50,7 @@
           </div>
         </div>
       </div>
-    </div>
+
 
     <div class="col-12">
       <div *ngIf="allEvents?.length == 0" class="alert alert-danger text-center" role="alert">

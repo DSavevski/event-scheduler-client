@@ -11,10 +11,9 @@ export class EventService {
   constructor(private http: Http) {
   }
 
-  public createEvent(name: string, desc: string, date: any, start: any, end: any, place: any, cityId: number): Observable<any> {
+  public createEvent(name: string, desc: string, start: any, end: any, place: any, cityId: number): Observable<any> {
     return this.http.post('/api/event', JSON.stringify({
-      name: name, description: desc,
-      date: date, startTime: start, endTime: end, place: place, cityId: cityId
+      name: name, description: desc, startTime: start, endTime: end, place: place, cityId: cityId
     }), {headers: this.headersRegister})
       .map((msg) => {
         return msg.text();

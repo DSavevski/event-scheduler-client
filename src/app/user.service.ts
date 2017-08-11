@@ -48,7 +48,6 @@ export class UserService {
     return this.http.post('/api/public/login',
       body, {headers: this.headers})
       .map(() => {
-        this.getUser();
         this.isAuthenticated = true;
         return true;
       }).catch(UserService.handleError);
