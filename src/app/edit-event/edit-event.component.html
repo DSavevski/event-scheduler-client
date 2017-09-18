@@ -70,7 +70,7 @@
 
 <div *ngIf="editImage">
   <div class="container" style="margin-top: 25px;">
-    <image-upload [url]="'/api/event/upload/'+ eventId"
+    <image-upload [url]="'/api/events/'+ eventId + '/upload_image'"
                   [max]="1" [buttonCaption]="'Browse'"
                   [dropBoxMessage]="'Drop your pictures here...'">
     </image-upload>

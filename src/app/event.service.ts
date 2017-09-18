@@ -5,14 +5,16 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class EventService {
 
-  // private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
   private headersRegister = new Headers({'Content-Type': 'application/json'});
+
+  private apiEventsPublic = '/api/public/events/';
+  private apiEvents = '/api/events/';
 
   constructor(private http: Http) {
   }
 
   public createEvent(name: string, desc: string, start: any, end: any, place: any, cityId: number): Observable<any> {
-    return this.http.post('/api/event', JSON.stringify({
+    return this.http.post(this.apiEvents, JSON.stringify({
       name: name, description: desc, startTime: start, endTime: end, place: place, cityId: cityId
     }), {headers: this.headersRegister})
       .map((msg) => {
@@ -21,22 +23,21 @@ export class EventService {
   }
 
   public getUserEvents(): Observable<any> {
-    return this.http.get('/api/event')
+    return this.http.get(this.apiEvents)
       .map(events => {
         return events.json();
       });
   }
 
   public getAllEvents(): Observable<any> {
-    return this.http.get('/api/public/events')
+    return this.http.get(this.apiEventsPublic)
       .map(events => {
         return events.json();
       });
   }
 
   public updateEvent(name: string, place: string, description: string, cityId: number, id: number): Observable<any> {
-    let url = '/api/event';
-    return this.http.put(url, {
+    return this.http.put(this.apiEvents, {
       name: name, place: place, description: description,
       id: id, cityId: cityId
     })
@@ -46,16 +47,14 @@ export class EventService {
   }
 
   public getEvent(id: string): Observable<any> {
-    let url = '/api/event/' + id;
-    return this.http.get(url)
+    return this.http.get(this.apiEvents + id)
       .map(event => {
         return event.json();
       });
   }
 
   public goingToEvent(id: number): Observable<any> {
-    let url = '/api/event/going/' + id;
-    console.log(url);
+    const url = this.apiEvents +id + '/going';
     return this.http.get(url)
       .map(events => {
         return events.text();
@@ -63,32 +62,30 @@ export class EventService {
   }
 
   public cancelEvent(id: number): Observable<any> {
-    let url = '/api/event/cancel/' + id;
+    const url = this.apiEvents +id + '/cancel';
     return this.http.delete(url)
       .map(result => {
-        console.log('Result from delete request for canceling event', result);
         return result;
       });
   }
 
   public deleteEvent(id: number): Observable<any> {
-    console.log("delete event with id : " + id);
-    return this.http.delete('/api/event/' + id)
+    return this.http.delete(this.apiEvents + id)
       .map(result => {
-        console.log('Result from delete request for deleting event', result);
         return result;
       });
   }
 
   public getCities(): Observable<any> {
-    return this.http.get('/api/public/cities')
+    const url = this.apiEventsPublic +'/cities';
+    return this.http.get(url)
       .map(result => {
         return result.json();
       });
   }
 
   public filterCities(cityName: string): Observable<any> {
-    let url = '/api/public/filter/' + cityName;
+    const url = this.apiEventsPublic + cityName;
     return this.http.get(url)
       .map(filteredEvents => {
         return filteredEvents.json();

@@ -9,6 +9,9 @@ import {Subject} from "rxjs/Subject";
 @Injectable()
 export class UserService {
 
+  private apiPublicUsers = '/api/public/users/';
+  private apiUsers = '/api/user/';
+
   isAuthenticated = Observable.create();
   user: Observable<{}>;
 
@@ -23,14 +26,15 @@ export class UserService {
 
   getUser(): Observable<{}> {
     if (this.isAuthenticated) {
-      this.user = this.http.get('/api/user')
+      this.user = this.http.get(this.apiUsers)
         .map(response => {
 
           if (response.text() != '') {
             this.isAuthenticated = true;
             this.newUser.next(response.json() as User);
             return response.json();
-          } else {
+          }
+          else {
             this.isAuthenticated = false;
           }
         })
@@ -43,25 +47,29 @@ export class UserService {
   }
 
   public login(user: User): Observable<{}> {
-    let body = `username=${user.username}&password=${user.password}`;
+    const body = `username=${user.username}&password=${user.password}`;
+    const url = this.apiPublicUsers + "login";
 
-    return this.http.post('/api/public/login',
+    return this.http.post(url,
       body, {headers: this.headers})
       .map(() => {
         this.isAuthenticated = true;
         return true;
       }).catch(UserService.handleError);
-
   }
 
   public logout(): Observable<Response> {
+    const url = this.apiUsers + "logout";
+
     this.isAuthenticated = false;
-    return this.http.get('/api/logout');
+    return this.http.get(url);
   }
 
   public registerUser(firstName: string, lastName: string, username: string, password: string, email: string): Observable<any> {
+    const url = this.apiPublicUsers + "register";
+
     return this.http
-      .post('/api/public/register', JSON.stringify(
+      .post(url, JSON.stringify(
         {firstName: firstName, lastName: lastName, username: username, password: password, email: email}),
         {headers: this.headersRegister})
       .map((msg) => {
@@ -71,14 +79,15 @@ export class UserService {
 
   }
 
-  public checkForDuplicateUsername(username: string): Observable<string> {
+  public checkIfUsernameExists(username: string): Observable<string> {
+    const url = this.apiPublicUsers + 'exists/register?username=' + username;
     return this.http
-      .get(`/api/public/duplicate/${username}`)
+      .get(url)
       .map(response => response.text());
   }
 
   public checkIfUsernameOrEmailExists(usernameOrEmail: string): Observable<string> {
-    let url = "/api/public/check?usernameOrEmail=" + usernameOrEmail;
+    const url = this.apiPublicUsers + 'exists/forget_password?username_email=' + usernameOrEmail;
     return this.http
       .get(url)
       .map(response => response.text());
@@ -89,8 +98,6 @@ export class UserService {
   }
 
   public updateUserFirstAndLastName(firstName: string, lastName: string): Observable<{}> {
-
-    console.log('Firstname', firstName);
     return this.http.put('/api/user', {firstName: firstName, lastName: lastName})
       .map(user => {
         return user.json();
@@ -98,23 +105,27 @@ export class UserService {
   }
 
   public resetPassword(oldPassword: string, newPassword: string): Observable<string> {
+    const url = this.apiUsers + 'reset_password';
     return this.http
-      .post('/api/user/reset',
+      .post(url,
         {oldPassword: oldPassword, newPassword: newPassword})
       .map(response => {
         return response.json();
       });
   }
 
-  public sendUsernameOrEmailToResetForgottenPassword(usernameOrEmail:string): Observable<string>{
-    let api = '/api/public/forgot/' + usernameOrEmail;
-    return this.http.get(api)
-      .map(res => {return res.text()})
+  public sendUsernameOrEmailToResetForgottenPassword(usernameOrEmail: string): Observable<string> {
+    const url = this.apiPublicUsers + `forget_password/${usernameOrEmail}`;
+    return this.http.post(url, null)
+      .map(res => {
+        return res.text()
+      })
   }
 
   public resetForgottenPassword(token: string, password: string): Observable<string> {
+    const url = this.apiPublicUsers + 'reset/forget_password';
     return this.http
-      .post('/api/public/resetForgottenPassword',
+      .post(url,
         {token: token, password: password}, {headers: this.headersRegister})
       .map(response => {
         return response.text();
@@ -122,16 +133,17 @@ export class UserService {
   }
 
   public getProvider(): Observable<string> {
-    return this.http.get('/api/user/provider')
+    const url = this.apiUsers + 'provider';
+    return this.http.get(url)
       .map(response => {
         return response.json().provider;
       });
   }
 
   public activateAccount(token: string): Observable<string> {
-    let url = "/api/public/registrationConfirm?token=" + token;
+    let url = this.apiPublicUsers + "register/confirm?token=" + token;
     console.log(url);
-    return this.http.get(url)
+    return this.http.put(url, null)
       .map(msg => {
         return msg.text();
       });

@@ -13,8 +13,6 @@ import {EventsComponent} from './events/events.component';
 import {HomeComponent} from './home/home.component';
 import {NewEventComponent} from './new-event/new-event.component';
 import {MyEventsComponent} from './my-events/my-events.component';
-import { Md2DatepickerModule }  from 'md2';
-import { NgDateRangePickerModule } from 'ng-daterangepicker';
 import {EventService} from "./event.service";
 import {ImageUploadModule} from "angular2-image-upload";
 import {ImageService} from "angular2-image-upload/lib/image.service";
@@ -26,10 +24,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AccountActivationComponent } from './account-activation/account-activation.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetForgottenPasswordComponent } from './reset-forgotten-password/reset-forgotten-password.component';
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -54,8 +48,6 @@ import { ResetForgottenPasswordComponent } from './reset-forgotten-password/rese
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    NgDateRangePickerModule,
-    Md2DatepickerModule,
     ImageUploadModule,
     CommonModule,
     NgxPaginationModule

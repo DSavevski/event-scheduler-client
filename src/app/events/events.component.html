@@ -21,14 +21,14 @@
       <div class="col-12"  *ngFor="let event of allEvents | paginate: { itemsPerPage: 2, currentPage: p}">
         <div class="card">
           <h5 class="card-header text-center">
-            <!--{{event.startDate.dayOfWeek}}, {{event.startDate.dayOfMonth}} {{event.startDate.month}}-->
-            <!--{{event.startDate.year}} {{event.startDate.hour}}:{{event.startDate.minute}}h-->
-            {{event.startDate | date}}
+            Start: {{event.startDate | date:'medium'}}
+
+
           </h5>
           <div class="card-block">
             <div class="row">
               <div class="col-4">
-                <img *ngIf="event?.picture" class="img-fluid" src="/api/public/image/{{event?.picture?.id}}"
+                <img *ngIf="event?.picture" class="img-fluid" src="/api/public/events/{{event?.picture?.id}}/image"
                      alt="Generic placeholder image">
               </div>
               <div class="col-8">

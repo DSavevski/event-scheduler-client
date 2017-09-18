@@ -27,7 +27,6 @@ export class MyEventsComponent implements OnInit {
   deleteEvent(eventId: number) {
     this.eventService.deleteEvent(eventId)
       .subscribe(result => {
-        console.log('Result from delete event', result);
         this.eventService.getUserEvents()
           .subscribe(events => {
             this.events = events;

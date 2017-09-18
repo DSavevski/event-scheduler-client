@@ -3,13 +3,12 @@
     <div class="col-12" *ngFor="let event of events">
       <div class="card">
         <h5 class="card-header text-center">
-          Start: {{event.startDate.dayOfWeek}}, {{event.startDate.dayOfMonth}} {{event.startDate.month}}
-          {{event.startDate.year}}, {{event.startDate.hour}}:{{event.startDate.minute}}h
+          Start: {{event.startDate | date:'medium'}}
         </h5>
         <div class="card-block">
           <div class="row">
             <div class="col-4">
-              <img class="img-fluid" *ngIf="event?.picture" src="/api/public/image/{{event?.picture.id}}"
+              <img class="img-fluid" *ngIf="event?.picture" src="/api/public/events/{{event?.picture.id}}/image"
                    alt="Generic placeholder image">
             </div>
             <div class="col-8">

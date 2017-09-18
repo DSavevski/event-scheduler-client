@@ -84,7 +84,7 @@
 
 <div *ngIf="cp" class="card-block col-sm-8">
     <div class="container" style="margin-top: 25px;">
-      <image-upload [url]="'/api/user/upload/'+ user.id"
+      <image-upload [url]="'/api/user/'+ user.id + '/upload_image'"
                     [max]="1" [buttonCaption]="'Browse'"
                     [dropBoxMessage]="'Drop your pictures here...'">
       </image-upload>

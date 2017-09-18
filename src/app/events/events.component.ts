@@ -35,10 +35,12 @@ export class EventsComponent implements OnInit {
     this.userService.getUser().subscribe(user => {
       this.loggedUser = user;
     });
+
+    console.log(navigator.geolocation);
   }
 
+
   goingToEvent(id: number) {
-    console.log('Clicked: ', id);
     this.eventService.goingToEvent(id).subscribe(
       msg => {
         this.eventService.getAllEvents()
@@ -67,7 +69,6 @@ export class EventsComponent implements OnInit {
           .subscribe(events => {
             this.allEvents = events;
           });
-        console.log('Result from delete request', result);
       });
   }
 

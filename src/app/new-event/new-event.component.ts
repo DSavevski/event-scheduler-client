@@ -1,5 +1,4 @@
-import {Component, OnInit, EventEmitter} from '@angular/core';
-import {NgDateRangePickerOptions} from "ng-daterangepicker";
+import {Component, OnInit} from '@angular/core';
 import {EventService} from "../event.service";
 import {Router} from "@angular/router";
 
@@ -10,9 +9,6 @@ import {Router} from "@angular/router";
 })
 export class NewEventComponent implements OnInit {
 
-  options: NgDateRangePickerOptions;
-
-  date: any;
   name: string;
   description: string;
   startTime: any;
@@ -20,7 +16,6 @@ export class NewEventComponent implements OnInit {
   place: any;
   cities: any;
   chosenCity: any;
-  //picture: any;
   eventId: number;
   message: string;
 
@@ -29,16 +24,6 @@ export class NewEventComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.options = {
-      theme: 'cyan',
-      range: 'tm',
-      dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      presetNames: ['This Month', 'Last Month', 'This Week', 'Last Week', 'This Year', 'Last Year', 'Start', 'End'],
-      dateFormat: 'yMd',
-      outputFormat: 'DD/MM/YYYY',
-      startOfWeek: 1
-    };
-
     this.eventService.getCities()
       .subscribe(cities => {
         this.cities = cities;
@@ -46,7 +31,6 @@ export class NewEventComponent implements OnInit {
   }
 
   onCreate() {
-    console.log("create");
     this.message = null;
     if (this.startTime != null
       && this.endTime != null && this.chosenCity != null && this.name != null && this.description != null
@@ -63,7 +47,8 @@ export class NewEventComponent implements OnInit {
   }
 
   finish() {
-    this.router.navigate(['/events']);
+    this.router.navigate(['/events'])
+      .then();
   }
 
 }

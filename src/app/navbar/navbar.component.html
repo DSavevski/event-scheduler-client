@@ -25,7 +25,7 @@
 
     </ul>
 
-    <img *ngIf="user?.picture && provider === 'LOCAL'" class="profile-picture" src="/api/public/image/{{user?.picture?.id}}"
+    <img *ngIf="user?.picture && provider === 'LOCAL'" class="profile-picture" src="/api/user/{{user?.picture?.id}}/image"
          alt="Profile picture" width="40" height="40">
 
 

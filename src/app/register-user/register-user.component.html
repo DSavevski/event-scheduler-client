@@ -64,7 +64,7 @@
 <div *ngIf="userId">
   <div class="container">
     <div class="card-header" style="margin-bottom: 25px;margin-top: 25px;">Add picture for your event</div>
-    <image-upload [url]="'/api/user/upload/'+ userId"
+    <image-upload [url]="'/api/user/'+ userId + '/upload_image'"
                   [max]="1" [buttonCaption]="'Select Image!'">
     </image-upload>
 

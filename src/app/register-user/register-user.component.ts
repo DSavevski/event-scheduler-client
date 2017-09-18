@@ -28,9 +28,12 @@ export class RegisterUserComponent implements OnInit {
   message: string;
   userId: number;
 
+  upload:boolean;
+
   constructor(private userService: UserService,
               private router: Router) {
     this.user = new User();
+    this.upload = false;
   }
 
   search(term: string): void {
@@ -42,7 +45,7 @@ export class RegisterUserComponent implements OnInit {
       .debounceTime(300)        // wait 300ms after each keystroke before considering the term
       .distinctUntilChanged()   // ignore if next search term is same as previous
       .switchMap(term => term   // switch to new observable each time the term changes
-        ? this.userService.checkForDuplicateUsername(term) // return the http search observable
+        ? this.userService.checkIfUsernameExists(term) // return the http search observable
         : Observable.of<string>()).subscribe(val => { // or the observable of empty heroes if there was no search term
       this.response = val;
     });
@@ -50,6 +53,7 @@ export class RegisterUserComponent implements OnInit {
 
   onCreate() {
     this.message = null;
+    this.upload = true;
     if (this.confirmPassword === this.user.password) {
       this.userService.registerUser(this.user.firstName, this.user.lastName, this.user.username, this.user.password, this.user.email)
         .subscribe(response => {
@@ -68,5 +72,6 @@ export class RegisterUserComponent implements OnInit {
 
   finish() {
     this.router.navigate(['/login']);
+    this.upload = false;
   }
 }
