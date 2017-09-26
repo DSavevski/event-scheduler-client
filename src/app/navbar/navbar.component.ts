@@ -49,4 +49,12 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['']);
     });
   }
+
+  donate(): void{
+    this.userService.donate()
+      .subscribe(res => {
+        console.log(res);
+        window.location.href = res.href;
+      })
+  }
 }

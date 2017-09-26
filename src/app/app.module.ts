@@ -24,6 +24,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AccountActivationComponent } from './account-activation/account-activation.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetForgottenPasswordComponent } from './reset-forgotten-password/reset-forgotten-password.component';
+import { ProcessPaymentComponent } from './process-payment/process-payment.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ResetForgottenPasswordComponent } from './reset-forgotten-password/rese
     NotFoundComponent,
     AccountActivationComponent,
     ForgotPasswordComponent,
-    ResetForgottenPasswordComponent
+    ResetForgottenPasswordComponent,
+    ProcessPaymentComponent
 
   ],
   imports: [

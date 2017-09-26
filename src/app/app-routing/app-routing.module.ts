@@ -14,6 +14,7 @@ import {NotFoundComponent} from "../not-found/not-found.component";
 import {AccountActivationComponent} from "../account-activation/account-activation.component";
 import {ForgotPasswordComponent} from "../forgot-password/forgot-password.component";
 import {ResetForgottenPasswordComponent} from "../reset-forgotten-password/reset-forgotten-password.component";
+import {ProcessPaymentComponent} from "../process-payment/process-payment.component";
 
 const routes: Route[] = [
 
@@ -66,6 +67,10 @@ const routes: Route[] = [
   {
     path: 'reset-password',
     component: ResetForgottenPasswordComponent
+  },
+  {
+    path: 'process-payment',
+    component: ProcessPaymentComponent
   },
   {
     path: '**',

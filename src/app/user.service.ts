@@ -148,4 +148,20 @@ export class UserService {
         return msg.text();
       });
   }
+
+  public donate(): Observable<any> {
+    let url = this.apiPublicUsers + 'donate';
+    return this.http.get(url)
+      .map(response => {
+        return response.json();
+      });
+  }
+
+  public processPayment(paymentId: string, token: string, PayerId: string): Observable<any> {
+    let url = this.apiPublicUsers + `process?paymentId=${paymentId}&token=${token}&PayerID=${PayerId}`;
+    return this.http.get(url)
+      .map(response => {
+        return response.json();
+      });
+  }
 }

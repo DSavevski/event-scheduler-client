@@ -36,41 +36,26 @@ export class EventsComponent implements OnInit {
       this.loggedUser = user;
     });
 
-    console.log(navigator.geolocation);
+    //console.log(navigator.geolocation);
   }
 
 
-  goingToEvent(id: number) {
-    this.eventService.goingToEvent(id).subscribe(
-      msg => {
-        this.eventService.getAllEvents()
-          .subscribe(events => {
-            this.allEvents = events;
-          });
+  goingToEvent(event) {
+    this.eventService.goingToEvent(event.eventId).subscribe(
+      () => {
+        event.totalGoings++;
+        event.isGoing = true;
       }
     )
   }
 
-  canGo(event: any): boolean {
-    if (this.loggedUser != null) {
-      for (var i = 0; i < event.attendingUsers.length; i++) {
-        if (event.attendingUsers[i].id === this.loggedUser.id) {
-          return true;
-        }
-      }
+    cancelEvent(event) {
+      this.eventService.cancelEvent(event.eventId)
+        .subscribe(() => {
+          event.totalGoings--;
+          event.isGoing = false;
+        });
     }
-    return false;
-  }
-
-  cancelEvent(eventId: number) {
-    this.eventService.cancelEvent(eventId)
-      .subscribe(result => {
-        this.eventService.getAllEvents()
-          .subscribe(events => {
-            this.allEvents = events;
-          });
-      });
-  }
 
   filter(){
       this.eventService.filterCities(this.chosenCity)

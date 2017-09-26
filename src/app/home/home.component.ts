@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -12,9 +11,10 @@ export class HomeComponent implements OnInit {
   constructor(private userService: UserService) {
   }
 
+  isAuthenticated: boolean;
+
   ngOnInit() {
-
     this.userService.getUser().subscribe();
-
+    this.isAuthenticated = this.userService.isAuthenticated;
   }
 }

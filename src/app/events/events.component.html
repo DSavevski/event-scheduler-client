@@ -23,7 +23,6 @@
           <h5 class="card-header text-center">
             Start: {{event.startDate | date:'medium'}}
 
-
           </h5>
           <div class="card-block">
             <div class="row">
@@ -36,12 +35,12 @@
                 <p class="card-text">{{event.description}}</p>
                 <span class="card-text text-danger">City: {{event.city.name}}</span>|
                 <span class="card-text text-danger">Place: {{event.place}}</span> |
-                <span class="card-text text-danger">Attending: {{event.attendingUsers.length}}</span>
+                <span class="card-text text-danger">Attending: {{event.totalGoings}}</span>
                 <div class="btn-group float-right" *ngIf="loggedUser">
-                  <button *ngIf="!canGo(event)" (click)="goingToEvent(event.id)"
+                  <button *ngIf="!event.isGoing" (click)="goingToEvent(event)"
                           class="btn btn-outline-success">Going
                   </button>
-                  <button *ngIf="canGo(event)" (click)="cancelEvent(event.id)"
+                  <button *ngIf="event.isGoing" (click)="cancelEvent(event)"
                           class="btn btn-secondary"> Not attending
                   </button>
                 </div>
